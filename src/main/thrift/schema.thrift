@@ -10,8 +10,7 @@ union GameID {
 
 struct Location {
 	1: optional string city;
-	2: optional string state;
-	3: optional string country; 
+	2: optional string country; 
 }
 
 union LocationPropertyValue {

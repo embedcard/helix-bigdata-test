@@ -84,7 +84,7 @@ public class SampleDataGenerator {
 			locationInfo.setCountry(LOCATION_COUNTRY[location]);
 			write(ser.serialize(makeLocationProperty(timestamp, location, locationInfo)),getAsFileSystemString("property_location_"+location+"_location_time_"+timestamp));
 			
-			for (int i=0;i<10000;i++) {
+			for (int i=0;i<1000;i++) {
 				timestamp = generateRandomTimeStamp();
 				String game = GAMES[R.nextInt(GAMES.length)];
 				write(ser.serialize(makeGameplay(location, game, timestamp)),getAsFileSystemString("edge_gameplay_location_"+location+"_game_"+game+"_time_"+timestamp));
