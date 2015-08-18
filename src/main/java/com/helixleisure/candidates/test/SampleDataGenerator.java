@@ -18,7 +18,7 @@ public class SampleDataGenerator {
 
 	public static TSerializer ser;
 	private static final Random R = new Random();
-	private static long offset = Timestamp.valueOf("2015-05-01 00:00:00").getTime();
+	private static long offset = Timestamp.valueOf("2015-06-01 8:00:00").getTime();
 	private static long end = Timestamp.valueOf("2015-08-01 00:00:00").getTime();
 	private static long diff = end - offset + 1;
 	
@@ -66,8 +66,8 @@ public class SampleDataGenerator {
 		return rand;
 	}
 	
-	public static String getTimestampAsFileSystemString(Timestamp timestamp) {
-		String result = timestamp.toString().replaceAll("\\:", "").replaceAll(" ", "").replaceAll("\\.", "");
+	public static String getAsFileSystemString(String s) {
+		String result = s.replaceAll("\\:", "").replaceAll(" ", "").replaceAll("\\.", "");
 		return result;
 	}
 	
@@ -78,16 +78,16 @@ public class SampleDataGenerator {
 		TSerializer ser = getSerializer();
 		for (int location=0;location<LOCATIONS.length;location++) {
 			Timestamp timestamp = Timestamp.valueOf("2015-05-01 00:00:00");
-			write(ser.serialize(makeLocationProperty(timestamp, location, LOCATIONS[location])),"property_location_"+location+"_name_time_"+getTimestampAsFileSystemString(timestamp));
+			write(ser.serialize(makeLocationProperty(timestamp, location, LOCATIONS[location])),getAsFileSystemString("property_location_"+location+"_name_time_"+timestamp));
 			Location locationInfo = new Location();
 			locationInfo.setCity(LOCATION_CITY[location]);
 			locationInfo.setCountry(LOCATION_COUNTRY[location]);
-			write(ser.serialize(makeLocationProperty(timestamp, location, locationInfo)),"property_location_"+location+"_location_time_"+getTimestampAsFileSystemString(timestamp));
+			write(ser.serialize(makeLocationProperty(timestamp, location, locationInfo)),getAsFileSystemString("property_location_"+location+"_location_time_"+timestamp));
 			
-			for (int i=0;i<100000;i++) {
+			for (int i=0;i<10000;i++) {
 				timestamp = generateRandomTimeStamp();
 				String game = GAMES[R.nextInt(GAMES.length)];
-				write(ser.serialize(makeGameplay(location, game, timestamp)),"edge_gameplay_location_"+location+"_game_"+game+"_time_"+getTimestampAsFileSystemString(timestamp));
+				write(ser.serialize(makeGameplay(location, game, timestamp)),getAsFileSystemString("edge_gameplay_location_"+location+"_game_"+game+"_time_"+timestamp));
 			}
 		}
 	}
